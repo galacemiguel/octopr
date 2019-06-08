@@ -1,7 +1,7 @@
 {
-  "name": "chrome-extension-webpack",
-  "version": "0.0.1",
-  "description": "A boilerplate to chrome extension with webpack",
+  "name": "octopr",
+  "version": "0.2.0",
+  "description": "OctoPr inlines a GitHub issue's pull request references, so you never have to go digging through an issue thread to find them again!",
   "scripts": {
     "build": "node utils/build.js",
     "start": "node utils/webserver.js"
