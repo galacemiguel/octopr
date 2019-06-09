@@ -1,0 +1,10 @@
+.State-outline {
+  border: 1px solid #0366d6;
+  background-color: transparent !important;
+  color: #0366d6 !important;
+}
+
+.State-outline:hover {
+  background-color: #0366d6 !important;
+  color: #fff !important;
+}
