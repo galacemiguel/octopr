@@ -24,7 +24,8 @@ export const getPulls = (accessToken, issueData, callback) => {
           return {
             repo: event.source.issue.repository.full_name,
             number: event.source.issue.number,
-            url: event.source.issue.html_url
+            url: event.source.issue.html_url,
+            title: event.source.issue.title
           };
         });
 

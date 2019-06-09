@@ -58,6 +58,7 @@ chrome.storage.sync.get("accessToken", data => {
     pullLink.href = pull.url;
     pullLink.target = "_blank";
     pullLink.rel = "noopener";
+    pullLink.title = pull.title;
     pullLink.style.width = "unset";
 
     const pullIcon = createPrOcticon();
