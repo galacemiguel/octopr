@@ -4,9 +4,9 @@
   "version": "0.2.0",
   "description": "OctoPr inlines a GitHub issue's pull request references, so you never have to go digging through an issue thread to find them again!",
   "icons": {
-    "16": "images/icon16.png",
-    "48": "images/icon48.png",
-    "128": "images/icon128.png"
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
   },
   "author": "Miguel N. Galace",
   "background": {
@@ -16,16 +16,8 @@
   },
   "content_scripts": [
     {
-      "css": [
-        "styles.css"
-      ],
-      "js": [
-        "octokit-rest.min.js",
-        "content.js"
-      ],
-      "matches": [
-        "https://github.com/*"
-      ]
+      "js": ["content.js"],
+      "matches": ["https://github.com/*"]
     }
   ],
   "options_page": "options.html",
@@ -36,6 +28,6 @@
     "https://github.com/*"
   ],
   "web_accessible_resources": [
-    "images/*.svg"
-  ]
+    "img/*.svg"
+  ],
 }
