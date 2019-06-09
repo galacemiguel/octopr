@@ -10,9 +10,7 @@
   },
   "author": "Miguel N. Galace",
   "background": {
-    "scripts": [
-      "background.js"
-    ]
+    "scripts": ["background.js"]
   },
   "content_scripts": [
     {
@@ -21,14 +19,7 @@
     }
   ],
   "options_page": "options.html",
-  "permissions": [
-    "activeTab",
-    "storage",
-    "webRequest",
-    "https://github.com/*"
-  ],
-  "web_accessible_resources": [
-    "img/*.svg"
-  ],
+  "permissions": ["activeTab", "storage", "webRequest", "https://github.com/*"],
+  "web_accessible_resources": ["img/*.svg"],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
