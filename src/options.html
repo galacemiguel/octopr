@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>OctoPr</title>
+  <style>
+    /* http://meyerweb.com/eric/tools/css/reset/
+       v2.0 | 20110126
+       License: none (public domain)
+    */
+
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+      display: block;
+    }
+    body {
+      line-height: 1;
+    }
+    ol, ul {
+      list-style: none;
+    }
+    blockquote, q {
+      quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+      content: '';
+      content: none;
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    /* Universal Box Sizing */
+
+    html {
+      box-sizing: border-box;
+    }
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+
+    /* Custom CSS */
+
+    html {
+      font-size: 16px;
+    }
+
+    @media screen and (min-width: 320px) {
+      html {
+        font-size: calc(16px + (21 - 16)*(100vw - 320px)/(600 - 400));
+      }
+    }
+
+    @media screen and (min-width: 600px) {
+      html {
+        font-size: 21px;
+      }
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      padding: 2rem 1rem;
+      background: linear-gradient(180deg, rgba(27, 31, 35, 0.065),rgba(27, 31, 35, 0)) no-repeat;
+      color: #24292e;
+      font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      line-height: 1.4;
+    }
+
+    a {
+      color: #0366d6;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    strong,
+    em {
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .header {
+      text-align: center;
+      color: #0366d6;
+      font-size: 1.33rem;
+    }
+
+    .header__icon {
+      display: block;
+      height: 2.5rem;
+      margin-right: auto;
+      margin-bottom: 0.5rem;
+      margin-left: auto;
+    }
+
+    .header__title {
+      display: inline-block;
+      font-weight: 500;
+    }
+
+    .header__subtitle {
+      display: inline-block;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .divider {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      height: 1px;
+      background-color: #eee;
+      border: none;
+    }
+
+    .heading {
+      font-weight: bold;
+      font-size: 1.33rem;
+      margin-bottom: 1rem;
+    }
+
+    .steps-list {
+      padding-left: 1rem;
+      list-style-type: decimal;
+      margin-bottom: 2rem;
+    }
+
+    .steps-list__item {
+      padding-left: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.75rem;
+    }
+
+    .steps-list__par {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      line-height: inherit;
+    }
+
+    .steps-list__note {
+      display: block;
+      margin-top: -0.5rem;
+      color: #586069;
+      font-size: 0.75rem;
+      font-style: italic;
+    }
+
+    .token-form {
+      display: flex;
+      margin-bottom: 2rem;
+      align-items: flex-end;
+    }
+
+    .token-form__input-container {
+      width: 75%;
+      margin-right: 0.5rem;
+    }
+
+    .token-form__label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .token-form__input {
+      display: block;
+      width: 100%;
+      height: 2rem;
+      padding: 6px 8px;
+      padding-right: 2rem;
+      background-color: #fafbfc;
+      background-position: right 10px center;
+      background-size: 1rem;
+      background-repeat: no-repeat;
+      border: 1px solid #d1d5da;
+      border-radius: 3px;
+      box-shadow: inset 0 1px 2px rgba(27, 31, 35, 0.075);
+      font-size: 1rem;
+    }
+
+    .token-form__input:focus {
+      outline: none;
+      border-color: #2188ff;
+      box-shadow: inset 0 1px 2px rgba(27, 31, 35, 0.075), 0 0 0 0.2em rgba(3, 102, 214, 0.3);
+    }
+
+    .token-form__btn {
+      flex: 1;
+      height: 2rem;
+      padding: 6px 12px;
+      background-color: #0366d6;
+      background-image: linear-gradient(-180deg,hsl(212, 97%, 63%),#0366d6 90%);
+      padding: 6px 12px;
+      border: 1px solid rgba(27, 31, 35, 0.2);
+      border-radius: 0.25em;
+      color: #fff;
+      font-weight: bold;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    .token-form__btn:hover {
+      box-shadow: inset 0 0 999px hsla(0, 0%, 0%, .10);
+      border-color: rgba(27, 31, 35, 0.5);
+    }
+
+    .token-form__btn:focus {
+      box-shadow: 0 0 0 0.2em rgba(3, 102, 214, 0.3);
+      outline: none;
+    }
+
+    .token-form__btn:disabled {
+      border: 1px solid rgba(27, 31, 35, 0.2);
+      box-shadow: inset 0 0 999px hsla(0, 0%, 100%, .25);
+      color: hsla(0, 0%, 100%, 0.75);
+      cursor: auto;
+    }
+
+    .footer {
+      margin-bottom: 1rem;
+      color: #586069;
+      font-size: 0.75rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <svg class="header__icon" xmlns="http://www.w3.org/2000/svg" style="isolation:isolate" viewBox="210 6 42 48"><path d="M212.058 6h37.884c1.136 0 2.058.922 2.058 2.058v43.884A2.059 2.059 0 0 1 249.942 54h-37.884A2.059 2.059 0 0 1 210 51.942V8.058c0-1.136.922-2.058 2.058-2.058zm.002 2h37.88c.03 0 .06.03.06.06v43.88c0 .03-.03.06-.06.06h-37.88c-.03 0-.06-.03-.06-.06V8.06c0-.02.01-.03.02-.04.01-.01.02-.02.04-.02zm27.943 28.56V24c-.06-1.56-.68-2.94-1.88-4.12-1.2-1.18-2.56-1.82-4.12-1.88h-2v-4l-6 6 6 6v-4h2c.54.04.96.22 1.38.62.42.4.6.84.62 1.38v12.56a3.986 3.986 0 0 0 2 7.44 3.985 3.985 0 0 0 2-7.44zm-2 5.84c-1.32 0-2.4-1.1-2.4-2.4 0-1.3 1.1-2.4 2.4-2.4 1.3 0 2.4 1.1 2.4 2.4 0 1.3-1.1 2.4-2.4 2.4zM226.006 16h-4v20h4V16zm0 22h-4v4h4v-4z" fill-rule="evenodd" fill="currentColor"/></svg>
+      <h1 class="header__title">OctoPr:</h1>
+      <p class="header__subtitle">Issue ➞ Pull Request</p>
+    </header>
+    <hr class="divider" />
+    <h2 class="heading">Generate your Personal Access Token ⭐️</h2>
+    <ol class="steps-list">
+      <li class="steps-list__item">
+        <p class="steps-list__par">Sign in to GitHub and <a href="https://github.com/settings/tokens/new">create a new personal access token</a>.</p>
+        <small class="steps-list__note">Settings > Developer settings > Personal access tokens > Generate new token</small>
+      </li>
+      <li class="steps-list__item">
+        <p class="steps-list__par">Write a <strong>Note</strong> to remind yourself what this token is for. “OctoPr” should be fine!</p>
+      </li>
+      <li class="steps-list__item">
+        <p class="steps-list__par">Tick <strong>Full control of private repositories.</strong></p>
+        <small class="steps-list__note">Don't worry! We will only ever <em>read</em> your repository data.</small>
+      </li>
+      <li class="steps-list__item">
+        <p class="steps-list__par">Click <strong>Generate token</strong>, save it somewhere secure, then paste it below!</p>
+      </li>
+    </ol>
+    <form class="token-form">
+      <label class="token-form__input-container">
+        <span class="token-form__label">Your access token</span>
+        <input
+          class="token-form__input"
+          type="password"
+          name="access-token"
+          required
+        />
+      </label>
+      <button
+        class="token-form__btn"
+        type="submit"
+        required
+        disabled
+      >Save</button>
+    </form>
+    <hr class="divider" />
+    <footer class="footer">
+      <small>Developed by <a href="https://galacemiguel.com/">Miguel N. Galace</a>.</small>
+    </footer>
+  </main>
+</body>
+</html>
