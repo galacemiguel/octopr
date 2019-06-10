@@ -1,6 +1,6 @@
-<span align="center">
+<p align="center">
   <img src="src/img/icon128.png" width="48" />
-</span>
+</p>
 <h1 align="center">OctoPr: Issue ➞ Pull Request</h1>
 
 OctoPr is a Chrome extension that will inline a GitHub issue's pull request references, so you never have to go digging through an issue thread to find them again!
@@ -28,8 +28,8 @@ Tip: Hovering on a particular badge will show a tooltip with the pull request ti
 
 ---
 
-<span align="center">
+<p align="center">
   <a href="https://chrome.google.com/webstore/detail/octopr/ejacdddppnlcddgbcgeffedehoknhigj">
     <img src="ChromeWebStore_Badge_v2_206x58.png" />
   </a>
-</span>
+</p>
