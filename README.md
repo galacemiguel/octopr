@@ -1,7 +1,11 @@
 <p align="center">
-  <img src="src/img/icon128.png" width="48" />
+  <a href="https://chrome.google.com/webstore/detail/octopr/ejacdddppnlcddgbcgeffedehoknhigj">
+    <img src="src/img/icon128.png" width="48" />
+  </a>
 </p>
-<h1 align="center">OctoPr: Issue ➞ Pull Request</h1>
+<h1 align="center">
+  <a href="https://chrome.google.com/webstore/detail/octopr/ejacdddppnlcddgbcgeffedehoknhigj">OctoPr: Issue ➞ Pull Request</a>
+</h1>
 
 OctoPr is a Chrome extension that will inline a GitHub issue's pull request references, so you never have to go digging through an issue thread to find them again!
 
