@@ -1,20 +1,22 @@
 import { authorizedFetch, getStorageData, setStorageData } from "../utils";
 
-const fetchPullRequest = async ({ owner, repo, pullNumber }) => {
+const fetchPullCommits = async ({ owner, repo, pullNumber }) => {
   const response = await authorizedFetch(
-    `https://api.github.com/repos/${owner}/${repo}/pulls/${pullNumber}`
+    `https://api.github.com/repos/${owner}/${repo}/pulls/${pullNumber}/commits`
   );
   const data = await response.json();
 
   return data;
 };
 
-const fetchDeployments = async ({ owner, repo, ref }) => {
+const fetchDeployments = async ({ owner, repo, sha }) => {
   const url = new URL(
     `https://api.github.com/repos/${owner}/${repo}/deployments`
   );
-  const urlParams = new URLSearchParams({ ref });
-  url.search = urlParams;
+  const searchParams = new URLSearchParams(
+    sha.map(s => `sha[]=${s}`).join("&")
+  );
+  url.search = searchParams;
   const response = await authorizedFetch(url);
   const data = await response.json();
 
@@ -63,10 +65,14 @@ const insertButtonsIntoHeader = buttons => {
 const insertDeploymentShortcut = async payload => {
   const pathSplit = payload.path.split("/").splice(3);
   const [owner, repo, , pullNumber] = pathSplit;
-  const pullRequest = await fetchPullRequest({ owner, repo, pullNumber });
-  const { ref: pullRef } = pullRequest.head;
+  const pullCommits = await fetchPullCommits({ owner, repo, pullNumber });
+  const pullCommitHashes = pullCommits.map(commit => commit.sha);
 
-  const pullDeployments = await fetchDeployments({ owner, repo, ref: pullRef });
+  const pullDeployments = await fetchDeployments({
+    owner,
+    repo,
+    sha: pullCommitHashes
+  });
   // Reverse because deployments are returned in reverse chronological order
   pullDeployments.reverse();
   const pullDeploymentEnvs = {};
