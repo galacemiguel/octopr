@@ -1,83 +1,13 @@
-import HovercardHandler from "./handlers/hovercard";
-import ShowFromProjectHandler from "./handlers/show-from-project";
-import { createPrOcticon, getPulls } from "./utils";
-import "../css/content.css";
+import insertPullShortcut from "./pull_shortcut";
 
 chrome.storage.sync.get("accessToken", data => {
-  const POPOVER_HANDLER_MAP = {
-    show_from_project: ShowFromProjectHandler,
-    hovercard: HovercardHandler
-  };
-
   chrome.runtime.onMessage.addListener(message => {
-    const issueDataSplit = message.issuePath.split("/");
-    const issueData = {
-      owner: issueDataSplit[1],
-      repo: issueDataSplit[2],
-      number: issueDataSplit[4]
-    };
-
-    getPulls(data.accessToken, issueData, pulls => {
-      const issueRepo = `${issueData.owner}/${issueData.repo}`;
-      const pullLinks = buildPullLinks(pulls, issueRepo);
-
-      const popoverHandler = new POPOVER_HANDLER_MAP[message.popoverType](
-        message.issuePath
-      );
-      const elBefore = popoverHandler.getElBefore();
-
-      popoverHandler.decorateLinkList(pullLinks);
-      elBefore.parentNode.insertBefore(pullLinks, elBefore.nextElementSibling);
-    });
-  });
-
-  const buildPullLinks = (pulls, issueRepo) => {
-    if (!pulls.length) {
-      return;
+    switch (message.type) {
+      case "PULL_SHORTCUT":
+        insertPullShortcut(message.payload, {
+          accessToken: data.accessToken
+        });
+        break;
     }
-
-    const pullList = document.createElement("ul");
-    pullList.style.lineHeight = "0";
-
-    pulls.forEach(pull => {
-      const pullListItem = document.createElement("li");
-      pullListItem.className = "d-inline-block mr-1 mb-1";
-
-      const pullLink = buildPullLink(pull, issueRepo);
-
-      pullListItem.appendChild(pullLink);
-      pullList.appendChild(pullListItem);
-    });
-
-    return pullList;
-  };
-
-  const buildPullLink = (pull, issueRepo) => {
-    const pullLink = document.createElement("a");
-    pullLink.className = "TableObject-item";
-    pullLink.href = pull.url;
-    pullLink.target = "_blank";
-    pullLink.rel = "noopener";
-    pullLink.title = pull.title;
-    pullLink.style.width = "unset";
-
-    const pullIcon = createPrOcticon();
-    pullIcon.setAttribute("class", "octicon octicon-git-pull-request");
-
-    const pullSpan = document.createElement("span");
-    pullSpan.className = "State State-outline";
-
-    const textNode = document.createTextNode(
-      pull.Repo === issueRepo
-        ? `#${pull.number}`
-        : ` ${pull.repo}#${pull.number}`
-    );
-
-    pullSpan.appendChild(pullIcon);
-    pullSpan.appendChild(textNode);
-
-    pullLink.appendChild(pullSpan);
-
-    return pullLink;
-  };
+  });
 });
