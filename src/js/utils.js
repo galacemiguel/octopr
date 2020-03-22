@@ -1,5 +1,38 @@
 import Octokit from "@octokit/rest";
 
+export const authorizedFetch = async (path, options = {}) => {
+  const accessToken = await getStorageData("accessToken");
+  const headers = options.headers || {};
+
+  return fetch(path, {
+    ...options,
+    headers: {
+      ...headers,
+      authorization: `token ${accessToken}`
+    }
+  });
+};
+
+export const getStorageData = key => {
+  return new Promise((resolve, reject) =>
+    chrome.storage.sync.get(key, result =>
+      chrome.runtime.lastError
+        ? reject(Error(chrome.runtime.lastError.message))
+        : resolve(result[key])
+    )
+  );
+};
+
+export const setStorageData = data => {
+  return new Promise((resolve, reject) =>
+    chrome.storage.sync.set(data, () =>
+      chrome.runtime.lastError
+        ? reject(Error(chrome.runtime.lastError.message))
+        : resolve(data)
+    )
+  );
+};
+
 export const getPulls = (accessToken, issueData, callback) => {
   const octokit = Octokit({
     auth: accessToken
