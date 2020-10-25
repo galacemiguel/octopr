@@ -1,5 +1,7 @@
 import insertPullShortcut from "./pull_shortcut";
-import insertDeploymentShortcut from "./deployment_shortcut";
+import insertDeploymentShortcut, {
+  cleanup as deploymentShortcutCleanup
+} from "./deployment_shortcut";
 
 chrome.storage.sync.get("accessToken", data => {
   chrome.runtime.onMessage.addListener(message => {
@@ -14,3 +16,5 @@ chrome.storage.sync.get("accessToken", data => {
     }
   });
 });
+
+deploymentShortcutCleanup();

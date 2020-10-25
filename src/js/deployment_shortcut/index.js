@@ -1,5 +1,9 @@
 import { authorizedFetch, getStorageData, setStorageData } from "../utils";
 
+export const cleanup = () => {
+  setStorageData({ isDeploymentShortcutPending: false });
+};
+
 const fetchPullCommits = async ({ owner, repo, pullNumber }) => {
   const response = await authorizedFetch(
     `https://api.github.com/repos/${owner}/${repo}/pulls/${pullNumber}/commits`
